@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oscillation Sync · Karsa</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Rajdhani:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap');
+:root{
+  --void:#0a0014;--neon-lime:#c6ff00;--neon-mag:#ff00ff;--neon-cyan:#00ffff;
+  --blood:#8b0000;--panel:rgba(10,0,20,.95);--ink:#c6ff00;--shadow:#000000;
+  --glow-lime:rgba(198,255,0,.6);--glow-mag:rgba(255,0,255,.6)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;color:var(--ink);overflow-x:hidden}
+body{
+  background:
+    radial-gradient(circle at 30% 20%,rgba(139,0,0,.3),transparent 40%),
+    radial-gradient(circle at 70% 80%,rgba(75,0,130,.3),transparent 40%),
+    repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(198,255,0,.02) 2px,rgba(198,255,0,.02) 4px),
+    repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(255,0,255,.02) 2px,rgba(255,0,255,.02) 4px),
+    #000;
+  font-family:'Rajdhani',sans-serif;
+  animation:void-pulse 10s ease-in-out infinite
+}
+@keyframes void-pulse{
+  0%,100%{background-position:0 0,0 0,0 0,0 0,0 0}
+  50%{background-position:0 50px,50px 0,0 0,0 0,0 0}
+}
+.container{max-width:1800px;margin:0 auto;padding:20px;position:relative;z-index:10}
+.header{
+  border:3px solid var(--neon-lime);background:var(--panel);backdrop-filter:blur(20px);
+  padding:40px;margin-bottom:30px;position:relative;overflow:hidden;
+  box-shadow:0 0 60px var(--glow-lime),inset 0 0 60px rgba(198,255,0,.1);
+  clip-path:polygon(0 0,100% 0,100% 85%,95% 100%,0 100%)
+}
+.header::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:3px;
+  background:linear-gradient(90deg,transparent,var(--neon-mag),var(--neon-lime),transparent);
+  animation:sweep 2s linear infinite
+}
+@keyframes sweep{to{left:100%}}
+h1{
+  font-family:'Bangers',cursive;font-size:84px;font-weight:400;
+  color:var(--neon-lime);letter-spacing:.1em;text-align:center;margin:0;
+  text-shadow:0 0 20px var(--glow-lime),0 0 40px var(--glow-lime),5px 5px 0 var(--shadow);
+  transform:skew(-5deg);animation:honey-glitch 4s infinite
+}
+@keyframes honey-glitch{
+  0%,100%{transform:skew(-5deg) translate(0)}
+  20%{transform:skew(-5deg) translate(-2px,2px)}
+  40%{transform:skew(-5deg) translate(2px,-2px)}
+  60%{transform:skew(-5deg) translate(-2px,-2px)}
+  80%{transform:skew(-5deg) translate(2px,2px)}
+}
+.subtitle{
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:16px;
+  color:var(--neon-mag);text-align:center;margin:15px 0;letter-spacing:.5em;text-transform:uppercase;
+  text-shadow:0 0 15px var(--glow-mag)
+}
+.tagline{
+  font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;color:var(--neon-cyan);
+  text-align:center;margin:10px 0;letter-spacing:.3em;text-shadow:0 0 10px var(--neon-cyan)
+}
+.law{
+  font-size:12px;color:var(--neon-lime);font-family:'Share Tech Mono',monospace;
+  text-align:center;padding:15px;background:rgba(198,255,0,.05);border:2px solid var(--neon-lime);
+  margin:20px 0;letter-spacing:.2em;text-transform:uppercase;
+  box-shadow:0 0 30px var(--glow-lime),inset 0 0 30px rgba(198,255,0,.1);
+  clip-path:polygon(5% 0,100% 0,95% 100%,0 100%)
+}
+.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;margin:40px 0}
+.category{
+  border:3px solid var(--neon-lime);background:var(--panel);backdrop-filter:blur(15px);
+  padding:40px;position:relative;overflow:hidden;min-height:450px;
+  box-shadow:0 0 40px rgba(198,255,0,.3),inset 0 0 40px rgba(0,0,0,.8);
+  transition:all .3s;cursor:pointer;
+  clip-path:polygon(0 0,100% 0,100% 90%,90% 100%,0 100%)
+}
+.category::before{
+  content:'';position:absolute;top:-3px;left:-3px;right:-3px;bottom:-3px;
+  background:linear-gradient(45deg,var(--neon-lime),var(--neon-mag),var(--neon-cyan),var(--neon-lime));
+  z-index:-1;opacity:0;transition:opacity .3s;
+  animation:border-rotate 3s linear infinite
+}
+@keyframes border-rotate{to{filter:hue-rotate(360deg)}}
+.category:hover::before{opacity:1}
+.category:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 0 80px var(--glow-lime),inset 0 0 80px rgba(198,255,0,.3)
+}
+.category h2{
+  font-family:'Bangers',cursive;font-size:42px;font-weight:400;
+  color:var(--neon-lime);letter-spacing:.1em;text-transform:uppercase;text-align:center;
+  margin:0 0 20px 0;text-shadow:0 0 20px var(--glow-lime),3px 3px 0 var(--shadow);
+  transform:skew(-3deg)
+}
+.category p{
+  font-size:14px;color:var(--ink);line-height:1.8;margin:15px 0;
+  font-family:'Rajdhani',sans-serif;font-weight:600;text-align:center;
+  text-shadow:0 0 5px rgba(198,255,0,.5)
+}
+.category-links{display:grid;grid-template-columns:1fr;gap:12px;margin-top:25px}
+.category-links a{
+  display:block;padding:14px 20px;
+  background:rgba(198,255,0,.08);border:2px solid var(--neon-lime);color:var(--neon-lime);
+  text-decoration:none;font-size:12px;text-transform:uppercase;letter-spacing:.15em;
+  font-family:'Orbitron',sans-serif;font-weight:700;transition:all .2s;text-align:center;
+  position:relative;overflow:hidden;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)
+}
+.category-links a::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,0,255,.4),transparent);
+  transition:left .5s
+}
+.category-links a:hover::before{left:100%}
+.category-links a:hover{
+  background:var(--neon-mag);color:var(--void);border-color:var(--neon-mag);
+  box-shadow:0 0 30px var(--glow-mag),inset 0 0 30px rgba(0,0,0,.5);
+  text-shadow:0 0 10px var(--void);transform:scale(1.05)
+}
+.footer{
+  margin-top:60px;padding:30px;border-top:3px solid var(--neon-lime);
+  font-size:11px;color:var(--neon-mag);text-align:center;
+  font-family:'Share Tech Mono',monospace;letter-spacing:.1em;
+  text-shadow:0 0 10px var(--glow-mag);
+  background:rgba(255,0,255,.05)
+}
+.void-scan{
+  position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.2),rgba(0,0,0,.2) 1px,transparent 1px,transparent 3px);
+  z-index:1000;animation:void-flicker 0.1s infinite
+}
+@keyframes void-flicker{
+  0%{opacity:0.8}
+  50%{opacity:1}
+  100%{opacity:0.8}
+}
+.hud{
+  position:fixed;font-size:9px;color:var(--neon-cyan);font-family:'Share Tech Mono',monospace;
+  text-shadow:0 0 5px var(--neon-cyan);z-index:1001;pointer-events:none
+}
+.hud.tl{top:10px;left:10px}
+.hud.tr{top:10px;right:10px;text-align:right}
+.hud.bl{bottom:10px;left:10px}
+.hud.br{bottom:10px;right:10px;text-align:right}
+.hero-img{
+  position:absolute;top:50%;right:5%;transform:translateY(-50%);
+  width:300px;height:300px;opacity:0.15;pointer-events:none;
+  filter:drop-shadow(0 0 30px var(--glow-lime));
+  animation:honey-float 6s ease-in-out infinite
+}
+@keyframes honey-float{
+  0%,100%{transform:translateY(-50%) rotate(-5deg)}
+  50%{transform:translateY(-55%) rotate(5deg)}
+}
+
+</style>
+</head>
+<body>
+<div class="void-scan"></div>
+<div class="container">
+  <div class="panel">
+    <h1>OSCILLATION SYNC</h1>
+    <div class="subtitle">3 Sources · 3 Internets · 1 Signature · Pulse Sync</div>
+    
+    <div class="sources-grid">
+      <div class="source">
+        <h3>SOURCE A</h3>
+        <div class="source-status" id="statusA">STANDBY</div>
+        <div class="source-sig" id="sigA">SHA256: a7f3c891...</div>
+        <div class="source-internet">INTERNET: ARPANET</div>
+      </div>
+      <div class="source">
+        <h3>SOURCE B</h3>
+        <div class="source-status" id="statusB">STANDBY</div>
+        <div class="source-sig" id="sigB">SHA256: a7f3c891...</div>
+        <div class="source-internet">INTERNET: NSFNET</div>
+      </div>
+      <div class="source">
+        <h3>SOURCE C</h3>
+        <div class="source-status" id="statusC">STANDBY</div>
+        <div class="source-sig" id="sigC">SHA256: a7f3c891...</div>
+        <div class="source-internet">INTERNET: CLEARWEB</div>
+      </div>
+    </div>
+    
+    <div class="viz-container">
+      <canvas id="canvas"></canvas>
+    </div>
+    
+    <div class="controls">
+      <button class="primary" id="init">INIT SOURCES</button>
+      <button id="pulse">SEND PULSE</button>
+      <button id="sync">SYNC ALL</button>
+      <button id="verify">VERIFY SIG</button>
+    </div>
+    
+    <div class="readout">
+      <div class="readout-item">
+        <div class="readout-label">Sources</div>
+        <div class="readout-val" id="sources">3</div>
+      </div>
+      <div class="readout-item">
+        <div class="readout-label">Pulses</div>
+        <div class="readout-val" id="pulses">0</div>
+      </div>
+      <div class="readout-item">
+        <div class="readout-label">Sync</div>
+        <div class="readout-val" id="sync">0%</div>
+      </div>
+      <div class="readout-item">
+        <div class="readout-label">Lag</div>
+        <div class="readout-val" id="lag">0ms</div>
+      </div>
+      <div class="readout-item">
+        <div class="readout-label">Holonomy</div>
+        <div class="readout-val" id="holonomy">0</div>
+      </div>
+      <div class="readout-item">
+        <div class="readout-label">State</div>
+        <div class="readout-val" id="state">IDLE</div>
+      </div>
+    </div>
+    
+    <div class="law">3 SOURCES · 1 SIGNATURE · 0 HOLONOMY</div>
+    
+    <div class="pulse-timeline" id="timeline">
+      <div class="pulse-entry">
+        <span class="pulse-time">[INIT]</span>
+        <span class="pulse-source">SYSTEM</span>
+        <span class="pulse-data">Awaiting sources...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resize(){
+  W = canvas.width = canvas.offsetWidth * devicePixelRatio;
+  H = canvas.height = canvas.offsetHeight * devicePixelRatio;
+}
+resize();
+window.addEventListener('resize', resize);
+
+let ENGINE = {
+  sources: 3,
+  pulses: 0,
+  sync: 0,
+  lag: 0,
+  holonomy: 0,
+  state: 'IDLE',
+  initialized: false,
+  syncing: false,
+  signature: 'a7f3c891d4e5f6a7b8c9d0e1f2a3b4c5',
+  pulses_data: []
+};
+
+let sources = [
+  {id: 'A', internet: 'ARPANET', x: W*0.2, y: H*0.5, color: '#ffd95a', phase: 0, active: false},
+  {id: 'B', internet: 'NSFNET', x: W*0.5, y: H*0.5, color: '#32e8ff', phase: 2*Math.PI/3, active: false},
+  {id: 'C', internet: 'CLEARWEB', x: W*0.8, y: H*0.5, color: '#e168ff', phase: 4*Math.PI/3, active: false}
+];
+
+let time = 0;
+
+function init(){
+  ENGINE.initialized = true;
+  ENGINE.state = 'READY';
+  sources.forEach(s => s.active = true);
+  
+  document.getElementById('statusA').textContent = 'ACTIVE';
+  document.getElementById('statusB').textContent = 'ACTIVE';
+  document.getElementById('statusC').textContent = 'ACTIVE';
+  
+  document.getElementById('sigA').textContent = 'SHA256: ' + ENGINE.signature.substring(0,16) + '...';
+  document.getElementById('sigB').textContent = 'SHA256: ' + ENGINE.signature.substring(0,16) + '...';
+  document.getElementById('sigC').textContent = 'SHA256: ' + ENGINE.signature.substring(0,16) + '...';
+  
+  addPulse('INIT', 'SYSTEM', 'All sources online. Signature verified.');
+  updateReadout();
+}
+
+function sendPulse(){
+  if(!ENGINE.initialized) return;
+  
+  ENGINE.pulses++;
+  ENGINE.state = 'PULSING';
+  
+  const source = sources[ENGINE.pulses % 3];
+  const pulseData = {
+    time: Date.now(),
+    source: source.id,
+    signature: ENGINE.signature,
+    sequence: ENGINE.pulses,
+    holonomy: 0
+  };
+  
+  ENGINE.pulses_data.push(pulseData);
+  
+  addPulse('PULSE', source.id, `Seq ${ENGINE.pulses} · Sig ${ENGINE.signature.substring(0,8)}...`);
+  
+  // Calculate sync
+  calculateSync();
+  updateReadout();
+  
+  setTimeout(() => {
+    ENGINE.state = 'SYNCED';
+    updateReadout();
+  }, 500);
+}
+
+function syncAll(){
+  if(!ENGINE.initialized) return;
+  
+  ENGINE.syncing = true;
+  ENGINE.state = 'SYNCING';
+  
+  // Send pulse from each source
+  for(let i = 0; i < 3; i++){
+    setTimeout(() => {
+      ENGINE.pulses++;
+      const source = sources[i];
+      addPulse('SYNC', source.id, `Broadcast ${ENGINE.pulses}`);
+      calculateSync();
+      updateReadout();
+    }, i * 100);
+  }
+  
+  setTimeout(() => {
+    ENGINE.syncing = false;
+    ENGINE.state = 'SYNCED';
+    ENGINE.sync = 100;
+    ENGINE.holonomy = 0;
+    ENGINE.lag = Math.floor(Math.random() * 5);
+    addPulse('SYNC', 'SYSTEM', 'All sources synchronized. Holonomy: 0');
+    updateReadout();
+  }, 500);
+}
+
+function verify(){
+  if(!ENGINE.initialized) return;
+  
+  // Verify all signatures match
+  const allMatch = sources.every(s => true); // Simulated
+  
+  if(allMatch){
+    ENGINE.state = 'VERIFIED';
+    addPulse('VERIFY', 'SYSTEM', 'Signature match across all 3 internets. ✓');
+  }else{
+    ENGINE.state = 'MISMATCH';
+    addPulse('VERIFY', 'SYSTEM', 'Signature mismatch detected!');
+  }
+  updateReadout();
+}
+
+function calculateSync(){
+  if(ENGINE.pulses_data.length < 3) return;
+  
+  // Check if last 3 pulses are from different sources
+  const last3 = ENGINE.pulses_data.slice(-3);
+  const uniqueSources = new Set(last3.map(p => p.source)).size;
+  
+  if(uniqueSources === 3){
+    ENGINE.sync = 100;
+    ENGINE.holonomy = 0;
+  }else{
+    ENGINE.sync = Math.floor((uniqueSources / 3) * 100);
+    ENGINE.holonomy = 3 - uniqueSources;
+  }
+}
+
+function addPulse(type, source, data){
+  const timeline = document.getElementById('timeline');
+  const entry = document.createElement('div');
+  entry.className = 'pulse-entry';
+  
+  const timestamp = new Date().toLocaleTimeString('en-US', {hour12: false});
+  entry.innerHTML = `
+    <span class="pulse-time">[${timestamp}]</span>
+    <span class="pulse-source">${type}:${source}</span>
+    <span class="pulse-data">${data}</span>
+  `;
+  
+  timeline.insertBefore(entry, timeline.firstChild);
+  
+  // Keep only last 20 entries
+  while(timeline.children.length > 20){
+    timeline.removeChild(timeline.lastChild);
+  }
+}
+
+function updateReadout(){
+  document.getElementById('sources').textContent = ENGINE.sources;
+  document.getElementById('pulses').textContent = ENGINE.pulses;
+  document.getElementById('sync').textContent = ENGINE.sync + '%';
+  document.getElementById('lag').textContent = ENGINE.lag + 'ms';
+  document.getElementById('holonomy').textContent = ENGINE.holonomy;
+  document.getElementById('state').textContent = ENGINE.state;
+}
+
+function draw(){
+  ctx.fillStyle = 'rgba(0,0,0,0.1)';
+  ctx.fillRect(0,0,W,H);
+  
+  time += 0.02;
+  
+  // Draw connections between sources
+  if(ENGINE.initialized){
+    ctx.strokeStyle = 'rgba(0,255,170,0.2)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    
+    // A → B
+    ctx.beginPath();
+    ctx.moveTo(sources[0].x, sources[0].y);
+    ctx.lineTo(sources[1].x, sources[1].y);
+    ctx.stroke();
+    
+    // B → C
+    ctx.beginPath();
+    ctx.moveTo(sources[1].x, sources[1].y);
+    ctx.lineTo(sources[2].x, sources[2].y);
+    ctx.stroke();
+    
+    // C → A
+    ctx.beginPath();
+    ctx.moveTo(sources[2].x, sources[2].y);
+    ctx.lineTo(sources[0].x, sources[0].y);
+    ctx.stroke();
+    
+    ctx.setLineDash([]);
+  }
+  
+  // Draw sources
+  sources.forEach((source, i) => {
+    const pulse = source.active ? 1 + Math.sin(time * 3 + source.phase) * 0.3 : 1;
+    const size = 30 * pulse;
+    
+    // Outer ring
+    ctx.strokeStyle = source.color;
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = source.color;
+    ctx.beginPath();
+    ctx.arc(source.x, source.y, size + 10, 0, Math.PI * 2);
+    ctx.stroke();
+    
+    // Inner core
+    ctx.fillStyle = source.color;
+    ctx.beginPath();
+    ctx.arc(source.x, source.y, size, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Label
+    ctx.fillStyle = '#c9a961';
+    ctx.font = 'bold 16px "IM Fell English SC"';
+    ctx.textAlign = 'center';
+    ctx.fillText(source.id, source.x, source.y - size - 20);
+    
+    ctx.fillStyle = '#8b2f8b';
+    ctx.font = '10px "Courier Prime"';
+    ctx.fillText(source.internet, source.x, source.y + size + 25);
+    
+    ctx.shadowBlur = 0;
+  });
+  
+  // Draw pulse waves
+  if(ENGINE.state === 'PULSING' || ENGINE.state === 'SYNCING'){
+    const waveRadius = (time * 100) % 200;
+    ctx.strokeStyle = 'rgba(0,255,170,0.5)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(W/2, H/2, waveRadius, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  
+  // Draw sync indicator
+  if(ENGINE.sync === 100){
+    ctx.fillStyle = '#00ffaa';
+    ctx.font = 'bold 24px "IM Fell English SC"';
+    ctx.textAlign = 'center';
+    ctx.fillText('SYNCED', W/2, 40);
+    
+    ctx.fillStyle = '#c9a961';
+    ctx.font = '14px "Courier Prime"';
+    ctx.fillText('42 = 0 = 1 = 1', W/2, 65);
+  }
+  
+  requestAnimationFrame(draw);
+}
+
+// Event listeners
+document.getElementById('init').onclick = init;
+document.getElementById('pulse').onclick = sendPulse;
+document.getElementById('sync').onclick = syncAll;
+document.getElementById('verify').onclick = verify;
+
+// Initialize
+updateReadout();
+draw();
+</script>
+</body>
+</html>
